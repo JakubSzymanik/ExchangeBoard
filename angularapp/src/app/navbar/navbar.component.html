@@ -1,0 +1,49 @@
+<header class="p-2 text-bg-dark">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-between">
+
+      <div class="d-flex align-items-center">
+        <h3>Exchange Board</h3>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0" *ngIf="accountService.currentUser$|async">
+          <li>
+            <a routerLink="items/user-item-list" routerLinkActive="active">Items</a>
+          </li>
+          <li>
+            <a routerLink="items/add-item" routerLinkActive="active">Add</a>
+          </li>
+        </ul>
+      </div>
+
+      <div *ngIf="accountService.currentUser$|async" class="d-flex align-items-center">
+        <div class="dropdown" dropdown>
+          <a class="dropdown-toggle text-white" style="text-decoration:none" dropdownToggle>{{(accountService.currentUser$|async)?.email}}</a>
+          <div class="dropdown-menu" *dropdownMenu>
+            <a routerLink="account/details" class="dropdown-item">Account Details</a>
+            <a class="dropdown-item" (click)="logout()">Logout</a>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!(accountService.currentUser$|async)" class="d-flex align-items-center">
+        <form #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off">
+          <input name="email"
+                 [(ngModel)]="model.Email"
+                 class="form-control
+               me-lg-auto" type="text"
+                 placeholder="email" />
+          <input name="password"
+                 [(ngModel)]="model.Password"
+                 class="form-control
+               me-lg-auto"
+                 type="text"
+                 placeholder="password" />
+          <button class="btn btn-success" type="submit">Login</button>
+        </form>
+
+        <button routerLink="register" type="button" class="btn btn-warning">Sign-up</button>
+      </div>
+
+    </div>
+  </div>
+</header>
