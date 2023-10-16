@@ -6,12 +6,20 @@ import { AccountDetailsComponent } from './account/account-details/account-detai
 import { AddItemComponent } from './items/add-item/add-item.component';
 import { UserItemListComponent } from './items/user-item-list/user-item-list.component';
 import { RegisterComponent } from './register/register.component';
+import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'items/user-item-list', component: UserItemListComponent },
-  { path: 'items/add-item', component: AddItemComponent },
-  { path: 'account/details', component: AccountDetailsComponent },
+  { path: '',
+    runGuardsAndResolvers: 'always',
+    canActivate: [AuthGuard],
+    children:
+    [
+        { path: 'items/user-item-list', component: UserItemListComponent },
+        { path: 'items/add-item', component: AddItemComponent },
+        { path: 'account/details', component: AccountDetailsComponent } //albo dopisać canActivate: .. przy konkretnych linkach
+    ]
+  },
   { path: 'register', component: RegisterComponent },
   { path: '**', component: HomeComponent, pathMatch: 'full' },
 ];
