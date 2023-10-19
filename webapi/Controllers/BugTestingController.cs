@@ -6,6 +6,7 @@ using webapi.Models;
 namespace webapi.Controllers
 {
     [ApiController]
+    [Route("api/[controller]/[action]")]
     public class BugTestingController : Controller
     {
         AppDbContext _context;
@@ -16,13 +17,13 @@ namespace webapi.Controllers
         }
 
         [Authorize]
-        [HttpGet("authorized")]
-        public ActionResult<string> GetAuthorized()
+        [HttpGet]
+        public ActionResult<string> GetUnauthorized()
         {
             return "Test authorized text";
         }
 
-        [HttpGet("not-found")]
+        [HttpGet]
         public ActionResult<User> GetNotFound()
         {
             var user = _context.Users.Find(-1);
@@ -31,7 +32,7 @@ namespace webapi.Controllers
             return user;
         }
 
-        [HttpGet("server-error")]
+        [HttpGet]
         public ActionResult<User> GetServerException()
         {
             try
@@ -45,7 +46,7 @@ namespace webapi.Controllers
             }
         }
 
-        [HttpGet("bad-request")]
+        [HttpGet]
         public ActionResult<string> GetBadRequest()
         {
             return BadRequest("Test bad request");

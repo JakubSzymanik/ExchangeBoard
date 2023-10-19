@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using webapi.Context;
 using webapi.Interfaces;
+using webapi.Middleware;
 using webapi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,6 +50,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 // CORS dalsza część policy, używa z nazwą ze stringa
 app.UseCors(frontendCorsPolicy);

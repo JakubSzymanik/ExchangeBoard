@@ -7,6 +7,7 @@ import { AddItemComponent } from './items/add-item/add-item.component';
 import { UserItemListComponent } from './items/user-item-list/user-item-list.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { ErrorTestingComponent } from './error-testing/error-testing.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
         { path: 'account/details', component: AccountDetailsComponent } //albo dopisać canActivate: .. przy konkretnych linkach
     ]
   },
+  { path: 'errors', component: ErrorTestingComponent }, //testowanie błędów, do wywalenia potem
   { path: 'register', component: RegisterComponent },
   { path: '**', component: HomeComponent, pathMatch: 'full' },
 ];

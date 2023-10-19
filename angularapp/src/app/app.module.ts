@@ -14,6 +14,7 @@ import { AccountDetailsComponent } from './account/account-details/account-detai
 import { AddItemComponent } from './items/add-item/add-item.component';
 import { UserItemListComponent } from './items/user-item-list/user-item-list.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ErrorTestingComponent } from './error-testing/error-testing.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ToastrModule } from 'ngx-toastr';
     AccountDetailsComponent,
     AddItemComponent,
     UserItemListComponent,
+    ErrorTestingComponent,
   ],
   imports: [
     BrowserModule,
