@@ -38,6 +38,8 @@ namespace webapi.Controllers
             try
             {
                 var user = _context.Users.Find(-1);
+                int y = 0;
+                int x = 100 / y;
                 return user;
             }
             catch(Exception ex)
