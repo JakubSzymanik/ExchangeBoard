@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace webapi.Models
 {
@@ -8,9 +9,10 @@ namespace webapi.Models
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public List<Photo> Photos { get; set; } //navigation property do podłączonych zdjęć
+        public List<Photo>? Photos { get; set; } //navigation property do podłączonych zdjęć
         
         public int UserId { get; set; }
-        public User User { get; set; }
+        [JsonIgnore]
+        public User? User { get; set; }
     }
 }

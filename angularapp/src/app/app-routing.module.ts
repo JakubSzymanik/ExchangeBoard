@@ -10,6 +10,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { ErrorTestingComponent } from './error-testing/error-testing.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { UserListComponent } from './users/user-list/user-list.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,12 +23,20 @@ const routes: Routes = [
           path: 'items',
           children:
           [
-              { path: 'items/user-item-list', component: UserItemListComponent },
-              { path: 'items/add-item', component: AddItemComponent }
+              { path: 'user-item-list', component: UserItemListComponent },
+              { path: 'add-item', component: AddItemComponent }
           ]
         },
         { path: 'account/details', component: AccountDetailsComponent } //albo dopisać canActivate: .. przy konkretnych linkach
-    ]},
+      ]
+  },
+  {
+    path: 'users',
+    children:
+      [
+        { path: 'list', component: UserListComponent }
+      ]
+  },
   { path: 'errors',
     children:
       [

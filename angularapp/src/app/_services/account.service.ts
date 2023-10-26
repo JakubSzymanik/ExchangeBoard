@@ -1,15 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { User } from '../_models/user';
+import { UserToken } from '../_models/user-token';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  baseUrl = "https://localhost:7202/api/";
-  private currentUserSource = new BehaviorSubject<User | null>(null);
+  baseUrl = environment.apiUrl;
+  private currentUserSource = new BehaviorSubject<UserToken | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) { }
@@ -18,13 +19,13 @@ export class AccountService {
   setCurrentUser() {
     const userString = localStorage.getItem('user');
     if (!userString) return;
-    const user: User = JSON.parse(userString);
+    const user: UserToken = JSON.parse(userString);
     this.currentUserSource.next(user);
   }
 
   login(model: any) {
-    return this.http.post<User>(this.baseUrl + "account/login", model).pipe(
-      map((response: User) => {
+    return this.http.post<UserToken>(this.baseUrl + "account/login", model).pipe(
+      map((response: UserToken) => {
         const user = response;
         if (user) //!= null
         {
@@ -36,8 +37,8 @@ export class AccountService {
   }
 
   register(model: any) {
-    return this.http.post<User>(this.baseUrl + "account/register", model).pipe(
-      map((response: User) => {
+    return this.http.post<UserToken>(this.baseUrl + "account/register", model).pipe(
+      map((response: UserToken) => {
         const user = response;
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));

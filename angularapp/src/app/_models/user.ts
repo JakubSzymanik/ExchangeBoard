@@ -1,5 +1,10 @@
+import { Item } from "./item";
+
 export interface User
 {
-  email: string,
-  token: string
+  id: number;
+  name: string;
+  email: string;
+  dateOfBirth: string;
+  items: Item[] | null;
 }

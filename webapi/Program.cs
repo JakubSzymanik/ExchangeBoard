@@ -5,6 +5,8 @@ using System.Text;
 using webapi.Context;
 using webapi.Interfaces;
 using webapi.Middleware;
+using webapi.Models;
+using webapi.Repositories;
 using webapi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,12 +19,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("ExchangeBoardContext"));
 });
-
 // Swagger do sprawdzania endpointów api
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 // CORS policy żeby się dało podłączyć z innego url https://localhost:4200 niż ma backend
 string frontendCorsPolicy = "frontend";
 builder.Services.AddCors(options =>
@@ -33,10 +33,9 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod().AllowAnyHeader();
     });
 });
-
 // inject mojego ITokenService do kontrolerów które mają takie pole w konstruktorze
 builder.Services.AddScoped<ITokenService, TokenService>();
-
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -48,8 +47,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
+
+//seed data
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    SeedData.Initialize(services);
+}
 
 app.UseMiddleware<ExceptionMiddleware>();
 

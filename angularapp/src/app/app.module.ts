@@ -18,6 +18,7 @@ import { ErrorTestingComponent } from './error-testing/error-testing.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { UserListComponent } from './users/user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
     ErrorTestingComponent,
     NotFoundComponent,
     ServerErrorComponent,
+    UserListComponent,
   ],
   imports: [
     BrowserModule,

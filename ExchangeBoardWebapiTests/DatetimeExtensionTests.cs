@@ -1,9 +1,10 @@
-using webapi.Extensions;
+﻿using webapi.Extensions;
 
 namespace ExchangeBoardWebapiTests
 {
     public class DatetimeExtensionTests
     {
+        //depreciated, trzeba by zrobić wrapper ale bez sensu, zostawiam jako template do przyszłych testów
         [Fact]
         public void Born_before_24oct2005_should_be_18()
         {
