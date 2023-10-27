@@ -5,9 +5,9 @@ using webapi.Models;
 
 namespace webapi.Repositories
 {
-    public class UserRepository : RepositoryBase, IUserRepository
+    public class UsersRepository : RepositoryBase, IUsersRepository
     {
-        public UserRepository(AppDbContext context) : base(context) {}
+        public UsersRepository(AppDbContext context) : base(context) {}
 
         public async Task<User> GetUserByIdAsync(int id)
         {

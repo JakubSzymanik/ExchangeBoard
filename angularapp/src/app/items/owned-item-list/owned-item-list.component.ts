@@ -5,6 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './user-item-list.component.html',
   styleUrls: ['./user-item-list.component.css']
 })
-export class UserItemListComponent {
+export class OwnedItemListComponent {
 
 }

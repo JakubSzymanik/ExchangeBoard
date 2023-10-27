@@ -12,13 +12,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { AccountDetailsComponent } from './account/account-details/account-details.component';
 import { AddItemComponent } from './items/add-item/add-item.component';
-import { UserItemListComponent } from './items/user-item-list/user-item-list.component';
+import { OwnedItemListComponent } from './items/owned-item-list/owned-item-list.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ErrorTestingComponent } from './error-testing/error-testing.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { UserListComponent } from './users/user-list/user-list.component';
+import { OwnedItemCardComponent } from './items/owned-item-card/owned-item-card.component';
 
 @NgModule({
   declarations: [
@@ -28,11 +29,12 @@ import { UserListComponent } from './users/user-list/user-list.component';
     HomeComponent,
     AccountDetailsComponent,
     AddItemComponent,
-    UserItemListComponent,
+    OwnedItemListComponent,
     ErrorTestingComponent,
     NotFoundComponent,
     ServerErrorComponent,
     UserListComponent,
+    OwnedItemCardComponent,
   ],
   imports: [
     BrowserModule,

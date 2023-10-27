@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AccountDetailsComponent } from './account/account-details/account-details.component';
 import { AddItemComponent } from './items/add-item/add-item.component';
-import { UserItemListComponent } from './items/user-item-list/user-item-list.component';
+import { OwnedItemListComponent } from './items/owned-item-list/owned-item-list.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { ErrorTestingComponent } from './error-testing/error-testing.component';
@@ -23,7 +23,7 @@ const routes: Routes = [
           path: 'items',
           children:
           [
-              { path: 'user-item-list', component: UserItemListComponent },
+              { path: 'user-item-list', component: OwnedItemListComponent },
               { path: 'add-item', component: AddItemComponent }
           ]
         },

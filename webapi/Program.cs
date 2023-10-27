@@ -35,7 +35,8 @@ builder.Services.AddCors(options =>
 });
 // inject mojego ITokenService do kontrolerów które mają takie pole w konstruktorze
 builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<IItemsRepository, ItemsRepository>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

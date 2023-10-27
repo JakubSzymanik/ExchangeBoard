@@ -9,14 +9,15 @@ using AutoMapper;
 
 namespace webapi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     public class UsersController : Controller
     {
         private readonly ILogger<UsersController> _logger;
-        private readonly IUserRepository _userRepository;
+        private readonly IUsersRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public UsersController(ILogger<UsersController> logger, IUserRepository userRepository, IMapper mapper)
+        public UsersController(ILogger<UsersController> logger, IUsersRepository userRepository, IMapper mapper)
         {
             _logger = logger;
             _userRepository = userRepository;

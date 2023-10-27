@@ -3,7 +3,7 @@ using webapi.Models;
 
 namespace webapi.Interfaces
 {
-    public interface IUserRepository
+    public interface IUsersRepository
     {
         Task<User> GetUserByIdAsync(int id);
         Task<IEnumerable<User>> GetUsersAsync();
