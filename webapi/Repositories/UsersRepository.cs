@@ -11,7 +11,7 @@ namespace webapi.Repositories
 
         public async Task<User> GetUserByIdAsync(int id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _context.Users.Include(v => v.Items).ThenInclude(v => v.Photos).FirstAsync(user => user.Id == id);
         }
 
         public async Task<IEnumerable<User>> GetUsersAsync()

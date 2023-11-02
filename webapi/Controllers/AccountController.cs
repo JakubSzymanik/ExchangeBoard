@@ -45,6 +45,7 @@ namespace webapi.Controllers
 
             return new UserTokenDTO
             {
+                Id = user.Id,
                 Email = userRegisterDTO.Email,
                 Token = _tokenService.CreateToken(user)
             };
@@ -53,8 +54,6 @@ namespace webapi.Controllers
         [HttpPost]
         public async Task<ActionResult<UserTokenDTO>> Login(UserLoginDTO userLoginDTO)
         {
-            _logger.LogInformation(userLoginDTO.Email);
-
             var user = await _context.Users.FirstOrDefaultAsync(user => user.Email == userLoginDTO.Email);
 
             if (user == null) return Unauthorized("User with this email doesn't exist.");
@@ -69,6 +68,7 @@ namespace webapi.Controllers
 
             return new UserTokenDTO
             {
+                Id = user.Id,
                 Email = userLoginDTO.Email,
                 Token = _tokenService.CreateToken(user)
             };

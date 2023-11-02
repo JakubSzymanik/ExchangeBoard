@@ -10,14 +10,14 @@ import { AccountService } from './account.service';
 export class UsersService {
   baseUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient, private accountService: AccountService) { }
+  constructor(private http: HttpClient) { }
 
   getUsers()
   {
-    return this.http.get<User[]>(this.baseUrl + 'users/getusers', this.accountService.getHttpOptions());
+    return this.http.get<User[]>(this.baseUrl + 'users/getusers');
   }
 
   getUserById(id: number) {
-    return this.http.get<User>(this.baseUrl + 'users/getuser/' + id.toString(), this.accountService.getHttpOptions());
+    return this.http.get<User>(this.baseUrl + 'users/getuser/' + id.toString());
   }
 }

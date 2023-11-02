@@ -1,6 +1,6 @@
-<div class="card" style="width:200px; height:auto; border-width:2px; padding:5px; margin:10px">
-  <div class="card-img-wrapper">
-    <img *ngIf="item?.photos" src="{{item!.photos![0].url}}" alt="" style="width:100%" />
-    <h4 style="text-align:center; vertical-align:middle">{{item?.name}}</h4>
+<div class="card" style="display:inline-block; width:200px; height:auto; border-width:2px; padding:5px; margin:10px">
+  <div *ngIf="item?.photos" class="card-img-wrapper">
+    <img src="{{item?.photos![0].url}}" alt="" style="width:100%" />
   </div>
+    <h5 style="text-align:center; vertical-align:middle">{{item?.name}}</h5>
 </div>

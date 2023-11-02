@@ -7,7 +7,7 @@ import { Item } from '../../_models/item';
   styleUrls: ['./owned-item-card.component.css']
 })
 export class OwnedItemCardComponent {
-  @Input() item: Item | undefined;
+  @Input() item: Item | null = null;
 
   constructor() { }
 }

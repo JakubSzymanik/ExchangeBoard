@@ -16,12 +16,12 @@ namespace webapi.Repositories
 
         public async Task<Item> GetItemByIdAsync(int id)
         {
-            return await _context.Items.FindAsync(id);
+            return await _context.Items.Include(item => item.Photos).FirstAsync(item => item.Id == id);
         }
 
         public async Task<IEnumerable<Item>> GetUserItemsByIdAsync(int userId)
         {
-            return await _context.Items.Where(item => item.UserId == userId).ToListAsync();
+            return await _context.Items.Where(item => item.UserId == userId).Include(item => item.Photos).ToListAsync();
         }
     }
 }
