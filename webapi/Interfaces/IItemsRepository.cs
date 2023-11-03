@@ -1,4 +1,5 @@
-﻿using webapi.Models;
+﻿using webapi.DTOs;
+using webapi.Models;
 
 namespace webapi.Interfaces
 {
@@ -7,5 +8,6 @@ namespace webapi.Interfaces
         Task<Item> GetItemByIdAsync(int id);
         Task<IEnumerable<Item>> GetAllItemsAsync();
         Task<IEnumerable<Item>> GetUserItemsByIdAsync(int userId);
+        Task<bool> CreateItem(ItemCreateDTO itemCreateDTO);
     }
 }

@@ -1,1 +1,14 @@
-<p>add-item works!</p>
+<form #createItemForm="ngForm" class="d-flex" (ngSubmit)="create()" autocomplete="off">
+  <input name="Name"
+         [(ngModel)]="model.Name"
+         class="form-control
+               me-lg-auto" type="text"
+         placeholder="name" />
+  <input name="Description"
+         [(ngModel)]="model.Description"
+         class="form-control
+               me-lg-auto"
+         type="text"
+         placeholder="description" />
+  <button class="btn btn-success" type="submit">Create</button>
+</form>

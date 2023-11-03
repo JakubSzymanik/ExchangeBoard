@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata.Ecma335;
 using webapi.Context;
+using webapi.DTOs;
 using webapi.Interfaces;
 using webapi.Models;
 
@@ -22,6 +24,29 @@ namespace webapi.Repositories
         public async Task<IEnumerable<Item>> GetUserItemsByIdAsync(int userId)
         {
             return await _context.Items.Where(item => item.UserId == userId).Include(item => item.Photos).ToListAsync();
+        }
+
+        public async Task<bool> CreateItem(ItemCreateDTO itemCreateDto)
+        {
+            var item = new Item
+            {
+                Name = itemCreateDto.Name,
+                Description = itemCreateDto.Description,
+                UserId = itemCreateDto.UserId
+            };
+            _context.Items.Add(item);
+            await _context.SaveChangesAsync();
+
+            //do wyjebania
+            var photo = new Photo
+            {
+                Url = "https://picsum.photos/400",
+                ItemId = item.Id
+            };
+            _context.Photos.Add(photo);
+
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

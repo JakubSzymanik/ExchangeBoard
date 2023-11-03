@@ -21,4 +21,8 @@ export class ItemsService {
   getUserItemsByUserId(id: number) {
     return this.http.get<Item[]>(this.baseUrl + 'items/getuseritems/' + id.toString());
   }
+
+  createItem(item: Item) {
+    return this.http.post<Item>(this.baseUrl + 'items/createitem', item);
+  }
 }

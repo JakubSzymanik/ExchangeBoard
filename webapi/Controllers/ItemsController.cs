@@ -7,6 +7,7 @@ using webapi.Interfaces;
 namespace webapi.Controllers
 {
     //[Authorize]
+    [ApiController]
     [Route("api/[controller]/[action]")]
     public class ItemsController : Controller
     {
@@ -41,18 +42,12 @@ namespace webapi.Controllers
             var items = await _itemsRepository.GetUserItemsByIdAsync(id);
             return Ok(_mapper.Map<IEnumerable<ItemDTO>>(items));
         }
-        //[HttpGet] // api/users/getusers
-        //public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
-        //{
-        //    var users = await _userRepository.GetUsersAsync();
-        //    return Ok(_mapper.Map<IEnumerable<UserDTO>>(users));
-        //}
 
-        //[HttpGet("{id}")] // api/users/getuser/2
-        //public async Task<ActionResult<UserDTO>> GetUser(int id)
-        //{
-        //    var user = await _userRepository.GetUserByIdAsync(id);
-        //    return _mapper.Map<UserDTO>(user);
-        //}
+        [HttpPost]
+        public async Task<ActionResult> CreateItem(ItemCreateDTO itemCreateDTO)
+        {
+            await _itemsRepository.CreateItem(itemCreateDTO);
+            return Ok();
+        }
     }
 }
