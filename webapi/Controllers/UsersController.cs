@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using webapi.Context;
 using webapi.Interfaces;
-using webapi.Models;
 using webapi.DTOs;
 using AutoMapper;
 

@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { User } from '../_models/user';
-import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +11,7 @@ export class UsersService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers()
-  {
+  getUsers() {
     return this.http.get<User[]>(this.baseUrl + 'users/getusers');
   }
 

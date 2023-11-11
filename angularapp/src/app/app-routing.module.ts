@@ -27,15 +27,15 @@ const routes: Routes = [
               { path: 'add-item', component: AddItemComponent }
           ]
         },
-        { path: 'account/details', component: AccountDetailsComponent } //albo dopisać canActivate: .. przy konkretnych linkach
-      ]
-  },
-  {
-    path: 'users',
-    children:
-      [
-        { path: 'list', component: UserListComponent }
-      ]
+        { path: 'account/details', component: AccountDetailsComponent }, //albo dopisać canActivate: .. przy konkretnych linkach
+        {
+          path: 'users',
+          children:
+            [
+              { path: 'list', component: UserListComponent }
+            ]
+        }
+    ]
   },
   { path: 'errors',
     children:

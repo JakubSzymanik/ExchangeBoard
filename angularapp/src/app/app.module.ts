@@ -21,6 +21,7 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { UserListComponent } from './users/user-list/user-list.component';
 import { OwnedItemCardComponent } from './items/owned-item-card/owned-item-card.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { ButtonCardComponent } from './misc/button-card/button-card.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
     ServerErrorComponent,
     UserListComponent,
     OwnedItemCardComponent,
+    ButtonCardComponent,
   ],
   imports: [
     BrowserModule,

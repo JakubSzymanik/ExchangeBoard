@@ -1,14 +1,18 @@
-<form #createItemForm="ngForm" class="d-flex" (ngSubmit)="create()" autocomplete="off">
-  <input name="Name"
-         [(ngModel)]="model.Name"
-         class="form-control
+<div style="width:50%; margin-left:auto; margin-right:auto; justify-content:center">
+  <form #createItemForm="ngForm" class="" (ngSubmit)="create()" autocomplete="off">
+    <input name="Name"
+           [(ngModel)]="model.Name"
+           class="form-control
                me-lg-auto" type="text"
-         placeholder="name" />
-  <input name="Description"
-         [(ngModel)]="model.Description"
-         class="form-control
+           placeholder="name"
+           style="margin:20px" />
+    <input name="Description"
+           [(ngModel)]="model.Description"
+           class="form-control
                me-lg-auto"
-         type="text"
-         placeholder="description" />
-  <button class="btn btn-success" type="submit">Create</button>
-</form>
+           type="text"
+           placeholder="description"
+           style="margin:20px" />
+    <button class="btn btn-success" type="submit">Create</button>
+  </form>
+</div>

@@ -6,7 +6,7 @@ using webapi.Interfaces;
 
 namespace webapi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]/[action]")]
     public class ItemsController : Controller
