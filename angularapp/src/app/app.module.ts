@@ -22,6 +22,7 @@ import { UserListComponent } from './users/user-list/user-list.component';
 import { OwnedItemCardComponent } from './items/owned-item-card/owned-item-card.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { ButtonCardComponent } from './misc/button-card/button-card.component';
+import { ItemPageComponent } from './items/item-page/item-page.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ButtonCardComponent } from './misc/button-card/button-card.component';
     UserListComponent,
     OwnedItemCardComponent,
     ButtonCardComponent,
+    ItemPageComponent,
   ],
   imports: [
     BrowserModule,

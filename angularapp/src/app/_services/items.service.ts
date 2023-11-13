@@ -11,12 +11,17 @@ export class ItemsService {
 
   constructor(private http: HttpClient) { }
 
+  getItem(itemId: number) {
+    return this.http.get<Item>(this.baseUrl + 'items/getitembyid/' + itemId.toString())
+  }
+
+  //gets all items
   getItems() {
     return this.http.get<Item[]>(this.baseUrl + 'items/getitems');
   }
 
-  getUserItemsByUserId(id: number) {
-    return this.http.get<Item[]>(this.baseUrl + 'items/getuseritems/' + id.toString());
+  getUserItemsByUserId(userId: number) {
+    return this.http.get<Item[]>(this.baseUrl + 'items/getuseritems/' + userId.toString());
   }
 
   createItem(item: Item) {
