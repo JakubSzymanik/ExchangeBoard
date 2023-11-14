@@ -1,1 +1,3 @@
-<p>item-page works!</p>
+<div *ngIf="(currentItemShareService.getItem | async) as item">
+  <app-owned-item-card [item]="item"></app-owned-item-card>
+</div>

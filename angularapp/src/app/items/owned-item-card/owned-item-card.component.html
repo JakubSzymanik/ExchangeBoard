@@ -1,4 +1,4 @@
-<div class="card" style="display:inline-block; width:200px; height:auto; border-width:2px; padding:5px; margin:10px">
+<div (click)="itemClicked()" class="card" style="display:inline-block; width:200px; height:auto; border-width:2px; padding:5px; margin:10px">
   <div *ngIf="item?.photos" class="card-img-wrapper">
     <img src="{{item?.photos![0].url}}" alt="" style="width:100%" />
   </div>

@@ -9,13 +9,10 @@ import { CurrentItemShareService } from '../../_services/current-item-share.serv
   styleUrls: ['./item-page.component.css']
 })
 export class ItemPageComponent {
-  protected item: Item | null = null;
 
-  constructor(private itemService: ItemsService, private currentItemShareService: CurrentItemShareService) { }
+  constructor(private itemService: ItemsService, protected currentItemShareService: CurrentItemShareService) { }
 
-  onNgInit() {
-    this.currentItemShareService.getItem.subscribe({
-      next: v => this.item = v
-    })
+  ngOnInit() {
+    //this.currentItemShareService.getItem.subscribe(v => this.item = v);
   }
 }

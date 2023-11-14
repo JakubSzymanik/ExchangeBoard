@@ -11,6 +11,7 @@ import { ErrorTestingComponent } from './error-testing/error-testing.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { UserListComponent } from './users/user-list/user-list.component';
+import { ItemPageComponent } from './items/item-page/item-page.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,7 +25,8 @@ const routes: Routes = [
           children:
           [
               { path: 'user-item-list', component: OwnedItemListComponent },
-              { path: 'add-item', component: AddItemComponent }
+              { path: 'add-item', component: AddItemComponent },
+              { path: 'item-page', component: ItemPageComponent }
           ]
         },
         { path: 'account/details', component: AccountDetailsComponent }, //albo dopisać canActivate: .. przy konkretnych linkach
