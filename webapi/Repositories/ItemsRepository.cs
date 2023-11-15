@@ -48,5 +48,17 @@ namespace webapi.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<IEnumerable<Item>> GetMatchableItems(int userId, int itemId)
+        {
+            var items = from item in _context.Items
+                        where
+                            (!_context.Matches.Any(match => match.ItemAID == item.Id || match.ItemBID == item.Id)) &&
+                            item.UserId != userId &&
+                            item.Id != itemId
+                        select item;
+
+            return await items.ToListAsync();
+        }
     }
 }

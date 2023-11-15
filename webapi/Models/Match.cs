@@ -3,6 +3,7 @@
     public class Match
     {
         public int Id { get; set; }
+        public bool IsSuccess { get; set; }
 
         public int ItemAID { get; set; }
         public Item ItemA { get; set; }

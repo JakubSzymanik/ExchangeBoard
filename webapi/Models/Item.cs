@@ -11,12 +11,6 @@ namespace webapi.Models
         public string Description { get; set; }
 
         public List<Photo>? Photos { get; set; } //navigation property do podłączonych zdjęć
-        
-        //public List<Match>? Matches { get; set; }
-        [InverseProperty("Item")]
-        public List<Like>? GivenLikes { get; set; }
-        [InverseProperty("TargetItem")]
-        public List<Like>? ReceivedLikes { get; set; }
 
         public int UserId { get; set; }
         [JsonIgnore]

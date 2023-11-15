@@ -12,8 +12,8 @@ using webapi.Context;
 namespace webapi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231025192031_AddedSets")]
-    partial class AddedSets
+    [Migration("20231115165658_NonmatchRemoved")]
+    partial class NonmatchRemoved
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,55 @@ namespace webapi.Migrations
                     b.ToTable("Items");
                 });
 
+            modelBuilder.Entity("webapi.Models.Like", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TargetItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("TargetItemId");
+
+                    b.ToTable("Likes");
+                });
+
+            modelBuilder.Entity("webapi.Models.Match", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsSuccess")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ItemAID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemBID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemAID");
+
+                    b.HasIndex("ItemBID");
+
+                    b.ToTable("Matches");
+                });
+
             modelBuilder.Entity("webapi.Models.Photo", b =>
                 {
                     b.Property<int>("Id")
@@ -66,7 +115,6 @@ namespace webapi.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PublicId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
@@ -100,11 +148,9 @@ namespace webapi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("PasswordHash")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
@@ -121,6 +167,44 @@ namespace webapi.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("webapi.Models.Like", b =>
+                {
+                    b.HasOne("webapi.Models.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("webapi.Models.Item", "TargetItem")
+                        .WithMany()
+                        .HasForeignKey("TargetItemId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+
+                    b.Navigation("TargetItem");
+                });
+
+            modelBuilder.Entity("webapi.Models.Match", b =>
+                {
+                    b.HasOne("webapi.Models.Item", "ItemA")
+                        .WithMany()
+                        .HasForeignKey("ItemAID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("webapi.Models.Item", "ItemB")
+                        .WithMany()
+                        .HasForeignKey("ItemBID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ItemA");
+
+                    b.Navigation("ItemB");
                 });
 
             modelBuilder.Entity("webapi.Models.Photo", b =>

@@ -79,6 +79,9 @@ namespace webapi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("IsSuccess")
+                        .HasColumnType("bit");
+
                     b.Property<int>("ItemAID")
                         .HasColumnType("int");
 
@@ -166,15 +169,15 @@ namespace webapi.Migrations
             modelBuilder.Entity("webapi.Models.Like", b =>
                 {
                     b.HasOne("webapi.Models.Item", "Item")
-                        .WithMany("GivenLikes")
+                        .WithMany()
                         .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("webapi.Models.Item", "TargetItem")
-                        .WithMany("ReceivedLikes")
+                        .WithMany()
                         .HasForeignKey("TargetItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Item");
@@ -187,13 +190,13 @@ namespace webapi.Migrations
                     b.HasOne("webapi.Models.Item", "ItemA")
                         .WithMany()
                         .HasForeignKey("ItemAID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("webapi.Models.Item", "ItemB")
                         .WithMany()
                         .HasForeignKey("ItemBID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("ItemA");
@@ -214,11 +217,7 @@ namespace webapi.Migrations
 
             modelBuilder.Entity("webapi.Models.Item", b =>
                 {
-                    b.Navigation("GivenLikes");
-
                     b.Navigation("Photos");
-
-                    b.Navigation("ReceivedLikes");
                 });
 
             modelBuilder.Entity("webapi.Models.User", b =>
