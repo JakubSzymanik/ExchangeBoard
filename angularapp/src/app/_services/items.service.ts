@@ -27,4 +27,8 @@ export class ItemsService {
   createItem(item: Item) {
     return this.http.post<Item>(this.baseUrl + 'items/createitem', item);
   }
+
+  getMatchableItems(userId: number, itemId: number) {
+    return this.http.get<Item[]>(this.baseUrl + 'items/getmatchableitems/' + userId.toString() + "/" + itemId.toString());
+  }
 }

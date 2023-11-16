@@ -14,12 +14,18 @@ namespace webapi.Controllers
         private readonly ILogger<ItemsController> _logger;
         private readonly IItemsRepository _itemsRepository;
         private readonly IMapper _mapper;
+        private readonly IMatchingAlgorithmService _matchingAlgorithmService;
 
-        public ItemsController(ILogger<ItemsController> logger, IItemsRepository itemsRepository, IMapper mapper)
+        public ItemsController(
+            ILogger<ItemsController> logger, 
+            IItemsRepository itemsRepository, 
+            IMapper mapper, 
+            IMatchingAlgorithmService matchingAlgorithmService)
         {
             _logger = logger;
             _itemsRepository = itemsRepository;
             _mapper = mapper;
+            _matchingAlgorithmService = matchingAlgorithmService;
         }
 
         [HttpGet]
@@ -41,6 +47,22 @@ namespace webapi.Controllers
         {
             var items = await _itemsRepository.GetUserItemsByIdAsync(id);
             return Ok(_mapper.Map<IEnumerable<ItemDTO>>(items));
+        }
+
+
+        [HttpGet("{userId}/{itemId}")]
+        public async Task<ActionResult<IEnumerable<ItemDTO>>> GetMatchableItems(int userId, int itemId)
+        {
+            var items = await _itemsRepository.GetMatchableItems(userId, itemId);
+            return Ok(_mapper.Map<IEnumerable<ItemDTO>>(items));
+        }
+
+        [HttpGet("{userId}/{itemId}")]
+        public async Task<ActionResult<ItemDTO>> GetNextMatchable(int userId, int itemId)
+        {
+            var items = await _itemsRepository.GetMatchableItems(userId, itemId);
+            var item = _matchingAlgorithmService.GetNextItem(items);
+            return Ok(_mapper.Map<ItemDTO>(item));
         }
 
         [HttpPost]

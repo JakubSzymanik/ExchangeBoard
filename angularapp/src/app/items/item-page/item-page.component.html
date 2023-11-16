@@ -1,3 +1,6 @@
 <div *ngIf="(currentItemShareService.getItem | async) as item">
   <app-owned-item-card [item]="item"></app-owned-item-card>
 </div>
+<div>
+  <p *ngFor="let item of items">{{item.name}}</p>
+</div>
