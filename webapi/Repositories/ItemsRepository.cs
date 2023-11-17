@@ -51,12 +51,20 @@ namespace webapi.Repositories
 
         public async Task<IEnumerable<Item>> GetMatchableItems(int userId, int itemId)
         {
-            var items = from item in _context.Items
-                        where
-                            (!_context.Matches.Any(match => match.ItemAID == item.Id || match.ItemBID == item.Id)) &&
-                            item.UserId != userId &&
-                            item.Id != itemId
-                        select item;
+            //var items = from item in _context.Items 
+            //            where
+            //                (!_context.Matches.Any(match => match.ItemAID == item.Id || match.ItemBID == item.Id)) &&
+            //                item.UserId != userId &&
+            //                item.Id != itemId
+            //            join photo in _context.Photos on item.Id equals photo.ItemId
+            //            select item;
+            var items = _context.Items
+                .Where(item =>
+                    (!_context.Matches.Any(
+                        match => match.ItemAID == item.Id || match.ItemBID == item.Id)) &&
+                        item.UserId != userId &&
+                        item.Id != itemId).
+                 Include(item => item.Photos);
 
             return await items.ToListAsync();
         }

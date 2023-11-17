@@ -31,4 +31,8 @@ export class ItemsService {
   getMatchableItems(userId: number, itemId: number) {
     return this.http.get<Item[]>(this.baseUrl + 'items/getmatchableitems/' + userId.toString() + "/" + itemId.toString());
   }
+
+  getNextMatchableItem(userId: number, itemId: number) {
+    return this.http.get<Item>(this.baseUrl + 'items/getnextmatchable/' + userId.toString() + "/" + itemId.toString());
+  }
 }

@@ -7,7 +7,8 @@ namespace webapi.Services
     {
         public Item GetNextItem(IEnumerable<Item> items)
         {
-            return items.OrderBy(item => item.Name).First();
+            Random rnd = new Random();
+            return items.ElementAt(rnd.Next(0, items.Count()));
         }
     }
 }

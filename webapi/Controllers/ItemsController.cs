@@ -62,7 +62,7 @@ namespace webapi.Controllers
         {
             var items = await _itemsRepository.GetMatchableItems(userId, itemId);
             var item = _matchingAlgorithmService.GetNextItem(items);
-            return Ok(_mapper.Map<ItemDTO>(item));
+            return _mapper.Map<ItemDTO>(item);
         }
 
         [HttpPost]

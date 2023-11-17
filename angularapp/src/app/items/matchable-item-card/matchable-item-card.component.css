@@ -1,0 +1,12 @@
+.like-btn {
+  width: 100px;
+  height: 100px;
+  background-color:white;
+  background-size: cover;
+  border:none;
+  margin: 5px 10px;
+}
+
+.btn-container {
+  text-align: center;
+}
