@@ -28,11 +28,12 @@ export class ItemsService {
     return this.http.post<Item>(this.baseUrl + 'items/createitem', item);
   }
 
+  //-------------------------------------------- do matching controllera przenieść
   getMatchableItems(userId: number, itemId: number) {
-    return this.http.get<Item[]>(this.baseUrl + 'items/getmatchableitems/' + userId.toString() + "/" + itemId.toString());
+    return this.http.get<Item[]>(this.baseUrl + 'matches/getmatchableitems/' + userId.toString() + "/" + itemId.toString());
   }
 
   getNextMatchableItem(userId: number, itemId: number) {
-    return this.http.get<Item>(this.baseUrl + 'items/getnextmatchable/' + userId.toString() + "/" + itemId.toString());
+    return this.http.get<Item>(this.baseUrl + 'matches/getnextmatchable/' + userId.toString() + "/" + itemId.toString());
   }
 }

@@ -49,22 +49,6 @@ namespace webapi.Controllers
             return Ok(_mapper.Map<IEnumerable<ItemDTO>>(items));
         }
 
-
-        [HttpGet("{userId}/{itemId}")]
-        public async Task<ActionResult<IEnumerable<ItemDTO>>> GetMatchableItems(int userId, int itemId)
-        {
-            var items = await _itemsRepository.GetMatchableItems(userId, itemId);
-            return Ok(_mapper.Map<IEnumerable<ItemDTO>>(items));
-        }
-
-        [HttpGet("{userId}/{itemId}")]
-        public async Task<ActionResult<ItemDTO>> GetNextMatchable(int userId, int itemId)
-        {
-            var items = await _itemsRepository.GetMatchableItems(userId, itemId);
-            var item = _matchingAlgorithmService.GetNextItem(items);
-            return _mapper.Map<ItemDTO>(item);
-        }
-
         [HttpPost]
         public async Task<ActionResult> CreateItem(ItemCreateDTO itemCreateDTO)
         {

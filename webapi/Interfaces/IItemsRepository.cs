@@ -9,6 +9,5 @@ namespace webapi.Interfaces
         Task<IEnumerable<Item>> GetAllItemsAsync();
         Task<IEnumerable<Item>> GetUserItemsByIdAsync(int userId);
         Task<bool> CreateItem(ItemCreateDTO itemCreateDTO);
-        Task<IEnumerable<Item>> GetMatchableItems(int userId, int itemId);
     }
 }
