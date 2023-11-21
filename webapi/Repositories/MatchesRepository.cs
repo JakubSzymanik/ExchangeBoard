@@ -14,18 +14,15 @@ namespace webapi.Repositories
         {
             var items = _context.Items
                 .Where(item =>
-                    (!_context.Matches.Any(match => match.ItemAID == item.Id || match.ItemBID == item.Id)) &&
-                     !_context.Likes.Any(like => like.ItemId == itemId) &&
+                    (!_context.Matches.Any(match => match.ContainsItems(item.Id, itemId))) &&
+                     !_context.Likes.Any(like => like.ItemId == itemId && like.TargetItemId == item.Id) &&
+                     !_context.Dislikes.Any(dislike => dislike.ItemId == itemId && dislike.TargetItemId == item.Id) &&
                      item.UserId != userId &&
                      item.Id != itemId).
                  Include(item => item.Photos);
 
             return await items.ToListAsync();
         }
-
-        //Match AreMatched
-
-        //bool IsLiked
 
         public async Task<int> CreateLike(int itemId, int targetItemId)
         {
@@ -40,13 +37,67 @@ namespace webapi.Repositories
 
         public async Task<int> CreateDislike(int itemId, int targetItemId)
         {
+            var dislike = new Dislike
+            {
+                ItemId = itemId,
+                TargetItemId = targetItemId
+            };
+            _context.Dislikes.Add(dislike);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> CreateMatch(int itemId, int targetItemId, bool success)
+        {
             var match = new Match
             {
-                ItemAID = itemId,
-                ItemBID = targetItemId,
-                IsSuccess = false
+                ItemAId = itemId,
+                ItemBId = targetItemId,
+                IsSuccess = success
             };
             _context.Matches.Add(match);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsLiked(int itemId, int targetItemId)
+        {
+            return await _context.Likes.AnyAsync(
+                like => like.ItemId == itemId && 
+                like.TargetItemId == targetItemId);
+        }
+        public async Task<bool> IsDisliked(int itemId, int targetItemId)
+        {
+            return await _context.Dislikes.AnyAsync(
+                dislike => dislike.ItemId == itemId &&  
+                dislike.TargetItemId == targetItemId);
+        }
+
+        public async Task<Match> AreMatched(int itemAId, int itemBId)
+        {
+            return await _context.Matches.FirstOrDefaultAsync(match => match.ContainsItems(itemAId, itemBId));
+        }
+
+        public async Task<int> DeleteLikes(int itemAId, int itemBId)
+        {
+            var likes = _context.Likes.Where(like => like.ContainsItems(itemAId, itemBId));
+            _context.Likes.RemoveRange(likes);
+            var dislikes = _context.Dislikes.Where(dislike => dislike.ContainsItems(itemAId, itemBId));
+            _context.Dislikes.RemoveRange(dislikes);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> DeleteItem(int itemId)
+        {
+            var item = await _context.Items.FindAsync(itemId);
+            if (item == null)
+                return 0;
+            _context.Items.Remove(item);
+            
+            //deleting manually because of ondelete - no action in item set due to circular delete
+            var likes = _context.Likes.Where(like => like.ItemId ==  itemId || like.TargetItemId == itemId);
+            _context.Likes.RemoveRange(likes);
+            var matches = _context.Matches.Where(match => match.ItemAId == itemId || match.ItemBId == itemId);
+            _context.Matches.RemoveRange(matches);
+
             return await _context.SaveChangesAsync();
         }
     }

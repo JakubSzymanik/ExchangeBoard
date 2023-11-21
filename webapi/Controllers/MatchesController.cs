@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using webapi.DTOs;
 using webapi.Interfaces;
+using webapi.Models;
 using webapi.Repositories;
 
 namespace webapi.Controllers
@@ -42,6 +43,53 @@ namespace webapi.Controllers
             var items = await _matchesRepository.GetMatchableItems(userId, itemId);
             var item = _matchingAlgorithmService.GetNextItem(items);
             return _mapper.Map<ItemDTO>(item);
+        }
+
+        [HttpPost("{itemId}/{targetItemId}")]
+        public async Task<ActionResult<bool>> SendLike(int itemId, int targetItemId)
+        {
+            var match = await _matchesRepository.AreMatched(itemId, targetItemId);
+            if (match != null)
+                return BadRequest("Items are already matched");
+
+            if(await _matchesRepository.IsLiked(targetItemId, itemId))
+            {
+                //successfuly matched
+                await _matchesRepository.CreateMatch(itemId, targetItemId, true);
+                await _matchesRepository.DeleteLikes(itemId, targetItemId);
+                return true;
+            }
+
+            if(await _matchesRepository.IsDisliked(targetItemId, itemId))
+            {
+                await _matchesRepository.CreateMatch(itemId, targetItemId, false);
+                await _matchesRepository.DeleteLikes(itemId, targetItemId);
+                return false;
+            }
+
+            await _matchesRepository.CreateLike(itemId, targetItemId);
+            return false;
+        }
+
+        [HttpPost("{itemId}/{targetItemId}")]
+        public async Task<ActionResult> SendDislike(int itemId, int targetItemId)
+        {
+            var match = await _matchesRepository.AreMatched(itemId, targetItemId);
+            if (match != null)
+                return BadRequest("Items are already matched");
+
+            bool liked = await _matchesRepository.IsLiked(targetItemId, itemId);
+            bool disliked = await _matchesRepository.IsDisliked(targetItemId, itemId);
+
+            if(liked || disliked)
+            {
+                await _matchesRepository.CreateMatch(itemId, targetItemId, false);
+                await _matchesRepository.DeleteLikes(itemId, targetItemId);
+                return Ok();
+            }
+
+            await _matchesRepository.CreateDislike(itemId, targetItemId);
+            return Ok();
         }
     }
 }

@@ -14,18 +14,15 @@ namespace webapi.Controllers
         private readonly ILogger<ItemsController> _logger;
         private readonly IItemsRepository _itemsRepository;
         private readonly IMapper _mapper;
-        private readonly IMatchingAlgorithmService _matchingAlgorithmService;
 
         public ItemsController(
             ILogger<ItemsController> logger, 
             IItemsRepository itemsRepository, 
-            IMapper mapper, 
-            IMatchingAlgorithmService matchingAlgorithmService)
+            IMapper mapper)
         {
             _logger = logger;
             _itemsRepository = itemsRepository;
             _mapper = mapper;
-            _matchingAlgorithmService = matchingAlgorithmService;
         }
 
         [HttpGet]

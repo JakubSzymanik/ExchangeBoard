@@ -5,6 +5,7 @@ import { CurrentItemShareService } from '../../_services/current-item-share.serv
 import { AccountService } from '../../_services/account.service';
 import { UserToken } from '../../_models/user-token';
 import { take } from 'rxjs';
+import { MatchesService } from '../../_services/matches.service';
 
 @Component({
   selector: 'app-item-page',
@@ -13,7 +14,7 @@ import { take } from 'rxjs';
 })
 export class ItemPageComponent {
 
-  constructor(private itemService: ItemsService, private accountService: AccountService, protected currentItemShareService: CurrentItemShareService) { }
+  constructor(private matchesService: MatchesService, private accountService: AccountService, protected currentItemShareService: CurrentItemShareService) { }
 
   matchableItem: Item | null = null;
   userId: number = 0;
@@ -27,6 +28,6 @@ export class ItemPageComponent {
     });
     this.currentItemShareService.getItem.subscribe(item => this.itemId = item?.id as number)
 
-    this.itemService.getNextMatchableItem(this.userId, this.itemId).subscribe(item => this.matchableItem = item);
+    this.matchesService.getNextMatchableItem(this.userId, this.itemId).subscribe(item => this.matchableItem = item);
   }
 }

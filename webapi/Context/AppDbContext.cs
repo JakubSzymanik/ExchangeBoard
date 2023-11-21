@@ -12,6 +12,7 @@ namespace webapi.Context
         public DbSet<Item> Items { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Like> Likes { get; set; }
+        public DbSet<Dislike> Dislikes { get; set; }
         public DbSet<Match> Matches { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,17 +31,31 @@ namespace webapi.Context
                 IsRequired().
                 OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Dislike>().
+                HasOne(dislike => dislike.Item).
+                WithMany().
+                HasForeignKey(dislike => dislike.ItemId).
+                IsRequired().
+                OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Like>().
+                HasOne(dislike => dislike.TargetItem).
+                WithMany().
+                HasForeignKey(dislike => dislike.TargetItemId).
+                IsRequired().
+                OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<Match>().
                 HasOne(match => match.ItemA).
                 WithMany().
-                HasForeignKey(match => match.ItemAID).
+                HasForeignKey(match => match.ItemAId).
                 IsRequired().
                 OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Match>().
                 HasOne(match => match.ItemB).
                 WithMany().
-                HasForeignKey(match => match.ItemBID).
+                HasForeignKey(match => match.ItemBId).
                 IsRequired().
                 OnDelete(DeleteBehavior.NoAction);
         }

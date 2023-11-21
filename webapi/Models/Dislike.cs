@@ -1,6 +1,6 @@
 ﻿namespace webapi.Models
 {
-    public class Like
+    public class Dislike
     {
         public int Id { get; set; }
         public int ItemId { get; set; }
