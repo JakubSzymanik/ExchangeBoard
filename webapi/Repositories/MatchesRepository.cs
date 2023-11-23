@@ -14,7 +14,7 @@ namespace webapi.Repositories
         {
             var items = _context.Items
                 .Where(item =>
-                    (!_context.Matches.Any(match => match.ContainsItems(item.Id, itemId))) &&
+                    (!_context.Matches.Any(match => (match.ItemAId == item.Id && match.ItemBId == itemId)||(match.ItemAId == itemId && match.ItemBId == item.Id))) &&
                      !_context.Likes.Any(like => like.ItemId == itemId && like.TargetItemId == item.Id) &&
                      !_context.Dislikes.Any(dislike => dislike.ItemId == itemId && dislike.TargetItemId == item.Id) &&
                      item.UserId != userId &&
@@ -73,14 +73,14 @@ namespace webapi.Repositories
 
         public async Task<Match> AreMatched(int itemAId, int itemBId)
         {
-            return await _context.Matches.FirstOrDefaultAsync(match => match.ContainsItems(itemAId, itemBId));
+            return await _context.Matches.FirstOrDefaultAsync(match => (match.ItemAId == itemAId && match.ItemBId == itemBId) || (match.ItemAId == itemBId && match.ItemBId == itemAId));
         }
 
         public async Task<int> DeleteLikes(int itemAId, int itemBId)
         {
-            var likes = _context.Likes.Where(like => like.ContainsItems(itemAId, itemBId));
+            var likes = _context.Likes.Where(like => (like.ItemId == itemAId && like.TargetItemId == itemBId)||(like.ItemId == itemBId && like.TargetItemId == itemAId));
             _context.Likes.RemoveRange(likes);
-            var dislikes = _context.Dislikes.Where(dislike => dislike.ContainsItems(itemAId, itemBId));
+            var dislikes = _context.Dislikes.Where(dislike => (dislike.ItemId == itemAId && dislike.TargetItemId == itemBId) || (dislike.ItemId == itemBId && dislike.TargetItemId == itemAId));
             _context.Dislikes.RemoveRange(dislikes);
             return await _context.SaveChangesAsync();
         }

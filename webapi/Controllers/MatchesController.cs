@@ -40,14 +40,22 @@ namespace webapi.Controllers
         [HttpGet("{userId}/{itemId}")]
         public async Task<ActionResult<ItemDTO>> GetNextMatchable(int userId, int itemId)
         {
+            Console.WriteLine("------ Get next matchable");
             var items = await _matchesRepository.GetMatchableItems(userId, itemId);
+            if(items == null || items.Count() <= 0) 
+            {
+                return null;
+            }
+
             var item = _matchingAlgorithmService.GetNextItem(items);
             return _mapper.Map<ItemDTO>(item);
         }
 
-        [HttpPost("{itemId}/{targetItemId}")]
+        [HttpGet("{itemId}/{targetItemId}")]
         public async Task<ActionResult<bool>> SendLike(int itemId, int targetItemId)
         {
+            Console.WriteLine("------ Send like");
+
             var match = await _matchesRepository.AreMatched(itemId, targetItemId);
             if (match != null)
                 return BadRequest("Items are already matched");
@@ -71,7 +79,7 @@ namespace webapi.Controllers
             return false;
         }
 
-        [HttpPost("{itemId}/{targetItemId}")]
+        [HttpGet("{itemId}/{targetItemId}")]
         public async Task<ActionResult> SendDislike(int itemId, int targetItemId)
         {
             var match = await _matchesRepository.AreMatched(itemId, targetItemId);

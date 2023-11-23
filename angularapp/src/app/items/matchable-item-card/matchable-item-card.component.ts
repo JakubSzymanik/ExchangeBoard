@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Item } from '../../_models/item';
 
 @Component({
@@ -8,6 +8,14 @@ import { Item } from '../../_models/item';
 })
 export class MatchableItemCardComponent {
   @Input() item: Item | null = null;
+  @Output() likeClickedEvent = new EventEmitter<Item>();
+  @Output() dislikeClickedEvent = new EventEmitter<Item>();
 
-  
+  sendLike() {
+    this.likeClickedEvent.emit(this.item ? this.item : undefined);
+  }
+
+  sendDislike() {
+    this.dislikeClickedEvent.emit(this.item ? this.item : undefined);
+  }
 }

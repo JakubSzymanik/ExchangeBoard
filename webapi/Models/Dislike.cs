@@ -8,11 +8,5 @@
 
         public int TargetItemId { get; set; }
         public Item TargetItem { get; set; }
-
-        public bool ContainsItems(int itemAID, int itemBID)
-        {
-            return (this.ItemId == itemAID && this.TargetItemId == itemBID) ||
-                (this.ItemId == itemBID && this.TargetItemId == itemAID);
-        }
     }
 }

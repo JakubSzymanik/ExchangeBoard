@@ -10,11 +10,5 @@
 
         public int ItemBId { get; set; }
         public Item ItemB { get; set; }
-
-        public bool ContainsItems(int itemAID, int itemBID)
-        {
-            return (this.ItemAId == itemAID && this.ItemBId == itemBID) ||
-                (this.ItemAId == itemBID && this.ItemBId == itemAID);
-        }
     }
 }

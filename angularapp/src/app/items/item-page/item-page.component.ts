@@ -4,7 +4,7 @@ import { ItemsService } from '../../_services/items.service';
 import { CurrentItemShareService } from '../../_services/current-item-share.service';
 import { AccountService } from '../../_services/account.service';
 import { UserToken } from '../../_models/user-token';
-import { take } from 'rxjs';
+import { concatMap, take } from 'rxjs';
 import { MatchesService } from '../../_services/matches.service';
 
 @Component({
@@ -28,6 +28,22 @@ export class ItemPageComponent {
     });
     this.currentItemShareService.getItem.subscribe(item => this.itemId = item?.id as number)
 
+    this.getNextMatchable();
+  }
+
+  getNextMatchable() {
     this.matchesService.getNextMatchableItem(this.userId, this.itemId).subscribe(item => this.matchableItem = item);
+  }
+
+  sendLike() {
+    console.log("item page: like sent");
+    this.matchesService.sendLike(this.itemId, this.matchableItem!.id)
+      .subscribe(v => this.getNextMatchable());
+    //handle match
+  }
+
+  sendDislike() {
+    this.matchesService.sendDislike(this.itemId, this.matchableItem!.id)
+      .subscribe(v => this.getNextMatchable());
   }
 }

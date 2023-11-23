@@ -3,8 +3,8 @@
     <img src="{{item?.photos![0].url}}" alt="" style="width:100%" />
     <h3 style="text-align:center; vertical-align:middle">{{item?.name}}</h3>
     <div class="btn-container">
-      <button class="like-btn" style="background-image: url(../assets/images/LikeBtn.png)"></button>
-      <button class="like-btn" style="background-image: url(../assets/images/DislikeBtn.png)"></button>
+      <button class="like-btn" (click)="sendLike()" style="background-image: url(../assets/images/LikeBtn.png)"></button>
+      <button class="like-btn" (click)="sendDislike()" style="background-image: url(../assets/images/DislikeBtn.png)"></button>
     </div>
   </div>
 </div>

@@ -21,10 +21,11 @@ export class MatchesService {
   }
 
   sendLike(itemId: number, targetItemId: number) {
-    return this.http.post<boolean>(this.baseUrl + 'matches/sendlike/' + itemId + '/' + targetItemId, {});
+    console.log("matches service: like sent");
+    return this.http.get<boolean>(this.baseUrl + 'matches/sendlike/' + itemId.toString() + '/' + targetItemId.toString());
   }
 
   sendDislike(itemId: number, targetItemId: number) {
-    return this.http.post(this.baseUrl + 'matches/senddislike/' + itemId + '/' + targetItemId, {});
+    return this.http.get(this.baseUrl + 'matches/senddislike/' + itemId.toString() + '/' + targetItemId.toString());
   }
 }
