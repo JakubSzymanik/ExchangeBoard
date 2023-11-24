@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using webapi.DTOs;
 using webapi.Interfaces;
+using webapi.Models;
 
 namespace webapi.Controllers
 {
@@ -49,7 +50,19 @@ namespace webapi.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateItem(ItemCreateDTO itemCreateDTO)
         {
-            await _itemsRepository.CreateItem(itemCreateDTO);
+            var item = new Item
+            {
+                Name = itemCreateDTO.Name,
+                Description = itemCreateDTO.Description,
+                UserId = itemCreateDTO.UserId
+            };
+            var photo = new Photo
+            {
+                Url = "https://picsum.photos/400",
+                ItemId = item.Id
+            };
+
+            await _itemsRepository.CreateItem(item, photo);
             return Ok();
         }
     }

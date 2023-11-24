@@ -26,23 +26,11 @@ namespace webapi.Repositories
             return await _context.Items.Where(item => item.UserId == userId).Include(item => item.Photos).ToListAsync();
         }
 
-        public async Task<bool> CreateItem(ItemCreateDTO itemCreateDto)
+        public async Task<bool> CreateItem(Item item, Photo photo)
         {
-            var item = new Item
-            {
-                Name = itemCreateDto.Name,
-                Description = itemCreateDto.Description,
-                UserId = itemCreateDto.UserId
-            };
             _context.Items.Add(item);
             await _context.SaveChangesAsync();
 
-            //do wyjebania
-            var photo = new Photo
-            {
-                Url = "https://picsum.photos/400",
-                ItemId = item.Id
-            };
             _context.Photos.Add(photo);
 
             await _context.SaveChangesAsync();
