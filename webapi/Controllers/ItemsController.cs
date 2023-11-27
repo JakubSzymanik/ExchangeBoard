@@ -34,18 +34,19 @@ namespace webapi.Controllers
         }
 
         [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<ItemDTO>>> GetUserItems(int id)
+        {
+            var items = await _itemsRepository.GetUserItemsByIdAsync(id);
+            return Ok(_mapper.Map<IEnumerable<ItemDTO>>(items));
+        }
+
+        [HttpGet("{id}")]
         public async Task<ActionResult<ItemDTO>> GetItemById(int id)
         {
             var item = await _itemsRepository.GetItemByIdAsync(id);
             return _mapper.Map<ItemDTO>(item);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<ItemDTO>>> GetUserItems(int id)
-        {
-            var items = await _itemsRepository.GetUserItemsByIdAsync(id);
-            return Ok(_mapper.Map<IEnumerable<ItemDTO>>(items));
-        }
 
         [HttpPost]
         public async Task<ActionResult> CreateItem(ItemCreateDTO itemCreateDTO)
@@ -56,13 +57,8 @@ namespace webapi.Controllers
                 Description = itemCreateDTO.Description,
                 UserId = itemCreateDTO.UserId
             };
-            var photo = new Photo
-            {
-                Url = "https://picsum.photos/400",
-                ItemId = item.Id
-            };
-
-            await _itemsRepository.CreateItem(item, photo);
+            
+            await _itemsRepository.CreateItem(item);
             return Ok();
         }
     }

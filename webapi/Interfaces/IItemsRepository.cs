@@ -8,6 +8,6 @@ namespace webapi.Interfaces
         Task<Item> GetItemByIdAsync(int id);
         Task<IEnumerable<Item>> GetAllItemsAsync();
         Task<IEnumerable<Item>> GetUserItemsByIdAsync(int userId);
-        Task<bool> CreateItem(Item item, Photo photo);
+        Task<bool> CreateItem(Item item);
     }
 }

@@ -24,6 +24,8 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { ButtonCardComponent } from './misc/button-card/button-card.component';
 import { ItemPageComponent } from './items/item-page/item-page.component';
 import { MatchableItemCardComponent } from './items/matchable-item-card/matchable-item-card.component';
+import { MatchDialogComponent } from './matches/match-dialog/match-dialog.component';
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { MatchableItemCardComponent } from './items/matchable-item-card/matchabl
     ButtonCardComponent,
     ItemPageComponent,
     MatchableItemCardComponent,
+    MatchDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,8 @@ import { MatchableItemCardComponent } from './items/matchable-item-card/matchabl
     AppRoutingModule,
     ToastrModule.forRoot({
       positionClass: 'toastr-top-right'
-    })
+    }),
+    MatDialogModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

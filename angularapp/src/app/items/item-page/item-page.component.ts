@@ -6,6 +6,8 @@ import { AccountService } from '../../_services/account.service';
 import { UserToken } from '../../_models/user-token';
 import { concatMap, take } from 'rxjs';
 import { MatchesService } from '../../_services/matches.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatchDialogComponent } from '../../matches/match-dialog/match-dialog.component';
 
 @Component({
   selector: 'app-item-page',
@@ -14,11 +16,28 @@ import { MatchesService } from '../../_services/matches.service';
 })
 export class ItemPageComponent {
 
-  constructor(private matchesService: MatchesService, private accountService: AccountService, protected currentItemShareService: CurrentItemShareService) { }
-
   matchableItem: Item | null = null;
+  userItem: Item | null = null;
   userId: number = 0;
   itemId: number = 0;
+
+  constructor(private matchesService: MatchesService,
+    private accountService: AccountService,
+    protected currentItemShareService: CurrentItemShareService,
+    private dialog: MatDialog) { }
+    
+
+  //----
+  openTestDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      itemA: this.userItem,
+      itemB: this.matchableItem
+    }
+
+    this.dialog.open(MatchDialogComponent, dialogConfig);
+  }
+  //----
 
   ngOnInit() {
     //this.currentItemShareService.getItem.subscribe(v => this.item = v);
@@ -26,7 +45,10 @@ export class ItemPageComponent {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => this.userId = user?.id as number
     });
-    this.currentItemShareService.getItem.subscribe(item => this.itemId = item?.id as number)
+    this.currentItemShareService.getItem.subscribe(item => {
+      this.userItem = item;
+      this.itemId = item?.id as number
+    })
 
     this.getNextMatchable();
   }
@@ -36,10 +58,8 @@ export class ItemPageComponent {
   }
 
   sendLike() {
-    console.log("item page: like sent");
     this.matchesService.sendLike(this.itemId, this.matchableItem!.id)
       .subscribe(v => this.getNextMatchable());
-    //handle match
   }
 
   sendDislike() {
