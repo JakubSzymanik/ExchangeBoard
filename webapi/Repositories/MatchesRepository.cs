@@ -100,5 +100,11 @@ namespace webapi.Repositories
 
             return await _context.SaveChangesAsync();
         }
+
+        public Task<IEnumerable<Match>> GetUserMatches(int userId)
+        {
+            var matches = _context.Matches.Where(match => match.IsSuccess && (match.ItemA.UserId == userId || match.ItemB.UserId == userId));
+            return matches;
+        }
     }
 }

@@ -15,5 +15,7 @@ namespace webapi.Interfaces
 
         public Task<int> DeleteLikes(int itemAId, int itemBId);
         public Task<int> DeleteItem(int itemId);
+
+        public Task<IEnumerable<Match>> GetUserMatches(int userId);
     }
 }

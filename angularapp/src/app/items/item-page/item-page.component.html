@@ -2,4 +2,3 @@
   <app-owned-item-card [item]="item"></app-owned-item-card>
   <app-matchable-item-card *ngIf="matchableItem != null" [item]="matchableItem" (likeClickedEvent)="sendLike()" (dislikeClickedEvent)="sendDislike()"></app-matchable-item-card>
 </div>
-<button (click)="openTestDialog()"></button>

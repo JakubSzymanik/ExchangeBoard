@@ -11,6 +11,7 @@ namespace webapi.Helpers
             CreateMap<User, UserDTO>();
             CreateMap<Item, ItemDTO>();
             CreateMap<Photo, PhotoDTO>();
+            CreateMap<Match, MatchDTO>();
         }
     }
 }

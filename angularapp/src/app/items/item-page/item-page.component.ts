@@ -27,21 +27,17 @@ export class ItemPageComponent {
     private dialog: MatDialog) { }
     
 
-  //----
-  openTestDialog() {
+  openMatchDialog(itemA: Item, itemB: Item) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      itemA: this.userItem,
-      itemB: this.matchableItem
+      itemA: itemA,
+      itemB: itemB
     }
 
-    this.dialog.open(MatchDialogComponent, dialogConfig);
+    return this.dialog.open(MatchDialogComponent, dialogConfig);
   }
-  //----
 
   ngOnInit() {
-    //this.currentItemShareService.getItem.subscribe(v => this.item = v);
-    
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => this.userId = user?.id as number
     });
@@ -59,7 +55,17 @@ export class ItemPageComponent {
 
   sendLike() {
     this.matchesService.sendLike(this.itemId, this.matchableItem!.id)
-      .subscribe(v => this.getNextMatchable());
+      .subscribe(v => {
+        if (v) {
+          if (!this.userItem || !this.matchableItem) {/*Handle error*/ return; }
+          const dialogRef = this.openMatchDialog(this.userItem, this.matchableItem);
+          dialogRef.afterClosed().subscribe(data => {
+            if (data as boolean) {/*Redirect to matches*/ }
+            else {/*keep browsing, probably dont have to do anything*/ }     
+          })
+        }
+        this.getNextMatchable()
+      });
   }
 
   sendDislike() {

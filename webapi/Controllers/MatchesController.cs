@@ -99,5 +99,11 @@ namespace webapi.Controllers
             await _matchesRepository.CreateDislike(itemId, targetItemId);
             return Ok();
         }
+
+        public async Task<ActionResult<IEnumerable<MatchDTO>>> GetUserMatches(int userId)
+        {
+            var matches = await _matchesRepository.GetUserMatches(userId);
+            return Ok(_mapper.Map<IEnumerable<MatchDTO>>(matches));
+        }
     }
 }
